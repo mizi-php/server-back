@@ -1,0 +1,20 @@
+{
+    "name": "mizi/server-back",
+    "description": "Servidor web backend para aplicações MIZI",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "André Ricardo",
+            "email": "contatoadmx@gamil.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "": "class/"
+        },
+        "files": []
+    },
+    "require": {
+        "mizi/core": "dev-main"
+    }
+}
