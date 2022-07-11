@@ -69,4 +69,29 @@ abstract class Router
         $addRoutesCallable();
         array_pop(self::$group);
     }
+
+    static function map(string $path): void
+    {
+        $path = path($path);
+        $map = [];
+
+        foreach (Dir::seek_for_file($path, true) as $file) {
+            $fileName = File::getOnly($file);
+            $routePath = substr($file, 0, strlen($fileName) * -1);
+
+            $route = str_replace(['[-]', '[...]'], ['', '...'], $routePath);
+            $route = str_replace_all('//', '/', $route);
+
+            $fileType = match ($fileName) {
+                'action.php',
+                'content.html', 'content.php' => true,
+                default => false
+            };
+
+            if ($fileType) $map[$route] = path("$path/$routePath");
+        }
+
+        foreach ($map as $route => $response)
+            self::add($route, ":$response");
+    }
 }

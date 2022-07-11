@@ -3,4 +3,6 @@
 /.env
 /mx
 
+/app
+/api
 /boot.php
