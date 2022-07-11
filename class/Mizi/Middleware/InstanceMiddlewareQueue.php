@@ -2,8 +2,6 @@
 
 namespace Mizi\Middleware;
 
-use Closure;
-
 class InstanceMiddlewareQueue
 {
     protected array $queue = [];
@@ -22,7 +20,7 @@ class InstanceMiddlewareQueue
     }
 
     /** Modifica as middlewares registradas */
-    function mod(string|array|Closure ...$middlewares): void
+    function mod(string|array|callable ...$middlewares): void
     {
         foreach ($middlewares as $middleware) {
             if (is_array($middleware)) {
@@ -38,7 +36,7 @@ class InstanceMiddlewareQueue
     }
 
     /** Adiciona uma middleware na fila de execução */
-    function add(string|array|Closure ...$middlewares): void
+    function add(string|array|callable ...$middlewares): void
     {
         foreach ($middlewares as $middleware) {
             if (is_array($middleware)) {
@@ -68,15 +66,15 @@ class InstanceMiddlewareQueue
     {
         if (count($middlewares)) {
             $middleware = array_shift($middlewares);
-            $middleware = $this->getClosure($middleware);
+            $middleware = $this->getCallable($middleware);
             $next = fn () => $this->execute($middlewares);
             return $middleware($next);
         }
         return null;
     }
 
-    /** Retorna uma Closure de exeução de uma middleware */
-    protected function getClosure(mixed $middleware)
+    /** Retorna uma Callable de exeução de uma middleware */
+    protected function getCallable(mixed $middleware)
     {
         if (is_callable($middleware))
             return $middleware;

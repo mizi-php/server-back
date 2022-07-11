@@ -7,7 +7,7 @@ use Mizi\Middleware\Intarfece\InterfaceMiddleware;
 /** Middleware [#name] */
 abstract class [#class] implements Middleware
 {
-    static function run(\Closure $next): mixed
+    static function run(calable $next): mixed
     {
         return $next();
     }
