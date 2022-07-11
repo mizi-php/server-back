@@ -12,7 +12,9 @@
         "psr-4": {
             "": "class/"
         },
-        "files": []
+        "files": [
+            "./source/helper/constant/request_method.php"
+        ]
     },
     "require": {
         "mizi/core": "dev-main"
