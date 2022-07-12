@@ -2,6 +2,7 @@
 
 namespace Mizi;
 
+use Mizi\Response\InstanceResponse;
 use Mizi\Router\TraitRouterAction;
 use Mizi\Router\TraitRouterData;
 use Mizi\Router\TraitRouterMiddleware;
@@ -17,7 +18,7 @@ abstract class Router
     protected static $group = [];
 
     /** Resolve a URL atual em uma rota registrada */
-    static function solve()
+    static function solve(bool $send = true)
     {
         $response = null;
 
@@ -31,16 +32,17 @@ abstract class Router
 
         if (!is_null($route)) {
             self::setData(self::$routes[$route], $uri);
-            $response = self::$routes[$route];
+            $response = self::$routes[$route]['response'];
         }
 
-        $response = self::$middlewareQueue->run(self::getAction($response));
+        $response = self::getCall($response);
 
-        // $response = self::$middleware->run(self::getCallableResponse($response));
+        $response = self::$middlewareQueue->run($response);
 
-        // $response = is_class($response, Response::class) ? $response : new Response($response);
+        if (!is_class($response, InstanceResponse::class))
+            $response = new InstanceResponse($response);
 
-        // if ($send) $response->send();
+        if ($send) $response->send();
 
         return $response;
     }
@@ -92,6 +94,6 @@ abstract class Router
         }
 
         foreach ($map as $route => $response)
-            self::add($route, ":$response");
+            self::add($route, "@$response");
     }
 }
