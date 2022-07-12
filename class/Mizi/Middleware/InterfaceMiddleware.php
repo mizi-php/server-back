@@ -1,6 +1,6 @@
 <?php
 
-namespace Mizi\Middleware\Intarfece;
+namespace Mizi\Middleware;
 
 interface InterfaceMiddleware
 {

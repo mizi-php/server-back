@@ -2,12 +2,12 @@
 
 namespace [#namespace];
 
-use Mizi\Middleware\Intarfece\InterfaceMiddleware;
+use Mizi\Middleware\InterfaceMiddleware;
 
 /** Middleware [#name] */
-abstract class [#class] implements Middleware
+abstract class [#class] implements InterfaceMiddleware
 {
-    static function run(calable $next): mixed
+    static function run(callable $next): mixed
     {
         return $next();
     }
