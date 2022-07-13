@@ -24,6 +24,6 @@
         ]
     },
     "require": {
-        "mizi/core": "dev-main"
+        "mizi/core": "^1.0"
     }
 }
