@@ -72,7 +72,7 @@ abstract class Router
         array_pop(self::$group);
     }
 
-    static function map(string $path): void
+    static function map(string $path, string $group = ''): void
     {
         $path = path($path);
         $map = [];
@@ -93,7 +93,11 @@ abstract class Router
             if ($fileType) $map[$route] = path("$path/$routePath");
         }
 
+        self::$group[] = $group;
+
         foreach ($map as $route => $response)
             self::add($route, "@$response");
+
+        array_pop(self::$group);
     }
 }
