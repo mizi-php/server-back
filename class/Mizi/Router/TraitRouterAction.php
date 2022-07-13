@@ -7,6 +7,7 @@ use Exception;
 use Mizi\Import;
 use Mizi\Request;
 use Mizi\Response\InstanceResponseFile;
+use Mizi\Response\InstanceResponseRedirect;
 use Mizi\Router;
 use Mizi\View;
 use ReflectionFunction;
@@ -119,7 +120,7 @@ trait TraitRouterAction
 
     protected static function call_redirect($response)
     {
-        return 'call_redirect';
+        return new InstanceResponseRedirect($response);
     }
 
     /** Retorna os parametros que devem ser usados em um metodo refletido */
