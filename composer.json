@@ -24,6 +24,7 @@
         ]
     },
     "require": {
-        "mizi/core": "^1.0"
+        "mizi/core": "^1.0",
+        "ext-curl": "*"
     }
 }
