@@ -2,6 +2,7 @@
 
 namespace Mizi\Router;
 
+use Closure;
 use Error;
 use Exception;
 use Mizi\Import;
@@ -44,10 +45,10 @@ trait TraitRouterAction
 
     protected static function call_closure($response)
     {
-        if (is_object($response)) {
-            $params = self::getUseParams(new ReflectionMethod($response, '__invoke'));
-        } else {
+        if ($response instanceof Closure) {
             $params = self::getUseParams(new ReflectionFunction($response));
+        } else {
+            $params = self::getUseParams(new ReflectionMethod($response, '__invoke'));
         }
         return $response(...$params);
     }
