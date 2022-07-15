@@ -6,7 +6,7 @@ class InstanceResponseRedirect extends InstanceResponse
 {
     function __construct(mixed $url = null)
     {
-        $this->content(url(...$url));
+        $this->content(url(...func_get_args()));
     }
 
     /** Prepara o conteúdo da resposta */
