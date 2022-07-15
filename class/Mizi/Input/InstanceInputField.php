@@ -65,7 +65,7 @@ class InstanceInputField
     /** Define uma regra de validação do campo */
     function validate(mixed $rule, ?string $message = null): static
     {
-        if (is_callable($rule)) {
+        if (is_closure($rule)) {
             $this->validate[] = [$rule, $message];
         } else if (is_bool($rule)) {
             $this->required($message ?? $rule);
@@ -142,7 +142,7 @@ class InstanceInputField
             $value = array_map(fn ($v) => $this->applySanitaze($v), $value);
         } else {
             foreach ($this->sanitaze as $sanitaze) {
-                if (is_callable($sanitaze)) {
+                if (is_closure($sanitaze)) {
                     $value = $sanitaze($value);
                 } else {
                     $value = (match ($sanitaze) {

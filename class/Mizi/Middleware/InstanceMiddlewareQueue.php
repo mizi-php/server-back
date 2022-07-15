@@ -9,7 +9,7 @@ class InstanceMiddlewareQueue
     /** Executa uma action após uma fila de middlewares */
     function run(mixed $action): mixed
     {
-        if (!is_callable($action))
+        if (!is_closure($action))
             $action  = fn () => $action;
 
         $this->add($action);
@@ -76,7 +76,7 @@ class InstanceMiddlewareQueue
     /** Retorna uma Callable de exeução de uma middleware */
     protected function getCallable(mixed $middleware)
     {
-        if (is_callable($middleware))
+        if (is_closure($middleware))
             return $middleware;
 
         if (is_string($middleware)) {

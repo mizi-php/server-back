@@ -21,8 +21,8 @@ trait TraitRouterAction
         if (is_null($response))
             return fn () => self::call_null();
 
-        if (is_callable($response))
-            return fn () => self::call_callable($response);
+        if (is_closure($response))
+            return fn () => self::call_closure($response);
 
         if (is_string($response)) {
             return match (substr($response, 0, 1)) {
@@ -42,7 +42,7 @@ trait TraitRouterAction
         throw new Exception('Page not found', 404);
     }
 
-    protected static function call_callable($response)
+    protected static function call_closure($response)
     {
         if (is_object($response)) {
             $params = self::getUseParams(new ReflectionMethod($response, '__invoke'));
@@ -65,8 +65,8 @@ trait TraitRouterAction
 
         $response = $response ?? fn () => view(Router::data());
 
-        if (is_callable($response))
-            return self::call_callable($response);
+        if (is_closure($response))
+            return self::call_closure($response);
 
         if (is_object($response)) {
             $method = strtolower(Request::method());
