@@ -6,6 +6,14 @@ class InstanceMiddlewareQueue
 {
     protected array $queue = [];
 
+    protected static array $registred = [];
+
+    /** Registra uma middleware globalmente */
+    static function register($name, $middleware)
+    {
+        self::$registred[$name] = $middleware;
+    }
+
     /** Executa uma action após uma fila de middlewares */
     function run(mixed $action): mixed
     {
@@ -80,6 +88,9 @@ class InstanceMiddlewareQueue
             return $middleware;
 
         if (is_string($middleware)) {
+
+            if (isset(self::$registred[$middleware]))
+                return $this->getCallable(self::$registred[$middleware]);
 
             $middleware = $middleware;
             $middleware = explode('.', $middleware);

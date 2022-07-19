@@ -24,8 +24,6 @@ abstract class Router
 
         $uri = Request::path();
 
-        self::applyModMiddlewaresURI($uri);
-
         self::organize(self::$routes);
 
         $route = self::getRouteMatch($uri);
@@ -36,6 +34,8 @@ abstract class Router
         }
 
         $response = self::getCall($response);
+
+        self::applyModMiddlewaresURI($uri);
 
         $response = self::$middlewareQueue->run($response);
 

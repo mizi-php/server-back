@@ -27,8 +27,8 @@ trait TraitRouterAction
 
         if (is_string($response)) {
             return match (substr($response, 0, 1)) {
+                '@' => self::getCall_action(substr($response, 1)),
                 '#' => fn () => self::call_dbug(substr($response, 1)),
-                '@' => fn () => self::call_action(substr($response, 1)),
                 '!' => fn () => self::call_file(substr($response, 1)),
                 '>' => fn () => self::call_redirect(substr($response, 1)),
                 default => fn () => self::call_class($response),
@@ -36,6 +36,18 @@ trait TraitRouterAction
         }
 
         return fn () => $response;
+    }
+
+    /** Retorna o objeto callable de uma resposta de action mapeada */
+    protected static function getCall_action($response): Closure
+    {
+        View::mapPath('.', $response);
+
+        $response = Import::return(path("$response/action.php"), Router::data());
+
+        $response = $response ?? fn () => view(Router::data());
+
+        return fn () => self::call_action($response);
     }
 
     protected static function call_null()
@@ -60,12 +72,6 @@ trait TraitRouterAction
 
     protected static function call_action($response)
     {
-        View::mapPath('.', $response);
-
-        $response = Import::return(path("$response/action.php"), Router::data());
-
-        $response = $response ?? fn () => view(Router::data());
-
         if (is_closure($response))
             return self::call_closure($response);
 
