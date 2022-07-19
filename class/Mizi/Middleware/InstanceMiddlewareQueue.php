@@ -2,17 +2,11 @@
 
 namespace Mizi\Middleware;
 
+use Mizi\Middleware;
+
 class InstanceMiddlewareQueue
 {
     protected array $queue = [];
-
-    protected static array $registred = [];
-
-    /** Registra uma middleware globalmente */
-    static function register($name, $middleware)
-    {
-        self::$registred[$name] = $middleware;
-    }
 
     /** Executa uma action após uma fila de middlewares */
     function run(mixed $action): mixed
@@ -89,8 +83,9 @@ class InstanceMiddlewareQueue
 
         if (is_string($middleware)) {
 
-            if (isset(self::$registred[$middleware]))
-                return $this->getCallable(self::$registred[$middleware]);
+            $registred = Middleware::get($middleware);
+
+            if ($registred) return $this->getCallable($registred);
 
             $middleware = $middleware;
             $middleware = explode('.', $middleware);

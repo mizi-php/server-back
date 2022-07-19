@@ -20,6 +20,7 @@
             "./source/helper/function/url.php",
             "./source/helper/function/view.php",
             "./source/helper/script/env.php",
+            "./source/helper/script/middlewares.php",
             "./source/helper/script/view_prepare.php"
         ]
     },
