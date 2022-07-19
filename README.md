@@ -12,6 +12,8 @@ Servidor web backend para aplicações MIZI
  - [_constant](https://github.com/mizi-php/server-back/tree/main/.doc/_constant.md)
  - [_env](https://github.com/mizi-php/server-back/tree/main/.doc/_env.md)
  - [_function](https://github.com/mizi-php/server-back/tree/main/.doc/_function.md)
+ - [_middleware](https://github.com/mizi-php/server-back/tree/main/.doc/_middleware.md)
+ - [_view](https://github.com/mizi-php/server-back/tree/main/.doc/_view.md)
  - [input](https://github.com/mizi-php/server-back/tree/main/.doc/input.md)
  - [jsonRequest](https://github.com/mizi-php/server-back/tree/main/.doc/jsonRequest.md)
  - [middleware](https://github.com/mizi-php/server-back/tree/main/.doc/middleware.md)
